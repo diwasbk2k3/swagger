@@ -29,4 +29,33 @@ userRouter.get("/api/user/:id", (req, res) => {
     })
 })
 
+// POST: Add new user
+userRouter.post("/api/user", (req, res) => {
+    const { id, name, gender, address } = req.body
+
+    // basic validation
+    if (!id || !name || !gender || !address) {
+        return res.status(400).send({
+            message: "All fields are required",
+            success: false
+        })
+    }
+
+    const newUser = {
+        id,
+        name,
+        gender,
+        address
+    }
+
+    users.push(newUser)
+
+    res.status(201).send({
+        message: "User added successfully",
+        result: newUser,
+        success: true
+    })
+})
+
+
 export default userRouter
